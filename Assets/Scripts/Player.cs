@@ -10,8 +10,9 @@ public class Player : MonoBehaviour
 
     private Vector3 moveDirection;
     public float gravityScale;
+    public float jumpGravity;
     public Animator anim;
-
+    public float rotateSpeed = 0f;
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -26,11 +27,31 @@ public class Player : MonoBehaviour
             if (Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W))
             {
                 moveDirection.y = jumpForce ;
-                moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime);
+                moveDirection.y = moveDirection.y + (Physics.gravity.y * (jumpGravity ) * Time.deltaTime);
             }
+        } else
+        {
+            moveDirection.y = moveDirection.y + (Physics.gravity.y * (jumpGravity) * Time.deltaTime);
         }
 
-        moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime );
+        if (moveDirection.x >0.1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 90, 0), Time.deltaTime * rotateSpeed);
+        }
+        if (moveDirection.x < -0.1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 270, 0), Time.deltaTime * rotateSpeed);
+
+        }
+
+        //dance
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            anim.SetTrigger("Dance");
+        }
+
+
+        //moveDirection.y = moveDirection.y + (Physics.gravity.y * gravityScale * Time.deltaTime );
 
         moveDirection.z = 0 - controller.transform.position.z;
         controller.Move(moveDirection * Time.deltaTime);
