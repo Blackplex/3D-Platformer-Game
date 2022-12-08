@@ -34,6 +34,7 @@ public class Player : MonoBehaviour
             moveDirection.y = moveDirection.y + (Physics.gravity.y * (jumpGravity) * Time.deltaTime);
         }
 
+        //turn character
         if (moveDirection.x >0.1)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 90, 0), Time.deltaTime * rotateSpeed);

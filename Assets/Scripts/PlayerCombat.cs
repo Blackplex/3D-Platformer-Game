@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public combatAttributes me;
+    public combatAttributes opponent;
+
     public Animator anim;
 
     public BoxCollider attackBox;
@@ -25,10 +28,23 @@ public class PlayerCombat : MonoBehaviour
 
     void Attack()
     {
+        me.damage = 20;
+        //play attack animation
         anim.SetTrigger("Attack");
     }
     void HeavyAttack()
     {
+        me.damage = 30;
         anim.SetTrigger("Heavy");
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            opponent = other.GetComponent<combatAttributes>();
+            me.DoDamage(opponent.gameObject);
+            Debug.Log("Trigger Enter");
+        }
     }
 }

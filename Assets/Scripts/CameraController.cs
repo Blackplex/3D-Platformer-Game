@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        focus = GameObject.Find("KayKit Animated Character").transform;
+        focus = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
